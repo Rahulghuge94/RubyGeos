@@ -90,17 +90,11 @@ end
 
 ## Development
 
-You can run tests (if present) with:
-
-```shell
-rake test
-```
-
 Contributions, bug reports, and feature requests are welcome.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the GNU General Public License.
 
 ## References
 
