@@ -2,6 +2,8 @@
 
 **Geos lib implementation to work with InfoWorks ICM Ruby**
 
+> **Note:** This project is in an **early development phase**. The API and functionality may change, and features may be incomplete or unstable. Contributions and feedback are welcome!
+
 ---
 
 ## Overview
@@ -12,7 +14,7 @@ RubyGeos is a Ruby extension designed to interface with the [GEOS](https://trac.
 
 - Ruby bindings for the GEOS library
 - Geometry creation, manipulation, and analysis
-- Suitable for integration with InfoWorks ICM Ruby scripting environment
+- Suitable for integration with InfoWorks ICM/WSPro Ruby scripting environment
 
 ## Installation
 
@@ -99,7 +101,7 @@ This project is licensed under the GNU General Public License.
 ## References
 
 - [GEOS C++ Library](https://libgeos.org/)
-- [InfoWorks ICM Ruby Scripting](https://help.innovyze.com/display/ICM/ICM+Ruby+Scripting+Guide)
+- [InfoWorks ICM Ruby Scripting](https://boards.autodesk.com/icm/items/infoworks-icm-exchange)
 - [Ruby FFI](https://github.com/ffi/ffi)
 
 ---
