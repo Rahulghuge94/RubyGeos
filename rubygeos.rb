@@ -132,8 +132,20 @@ module RubyGEOS
       return if @destroyed
       RubyGEOS.GEOSGeom_destroy_r(@context, @ptr) unless @ptr.null?
       @destroyed = true
+      @ptr = Fiddle::Pointer.new(0) # Null out the pointer
+      ObjectSpace.undefine_finalizer(self) # Explicitly remove finalizer
     end
-    
+      
+    # Detaches the finalizer from this Ruby object.
+    # This is used when the pointer's ownership is
+    # transferred to another GEOS object.
+    def detach!
+      return if @destroyed
+      ObjectSpace.undefine_finalizer(self)
+      @destroyed = true # Mark as "destroyed" from Ruby's POV
+      @ptr = Fiddle::Pointer.new(0) # Null out the pointer
+    end
+      
     def destroyed?
       @destroyed
     end
@@ -446,12 +458,23 @@ module RubyGEOS
         end
         
         geom_ptr = RubyGEOS.GEOSGeom_createPolygon_r(@handle, ext_ring.ptr, holes_array, holes.length)
+        
+        # === FIX ===
+        # GEOS now owns the holes, so detach their finalizers
+        hole_geoms.each(&:detach!)
       end
       
       raise "Failed to create polygon" if geom_ptr.null?
+
+      # === FIX ===
+      # GEOS now owns the exterior ring, so detach its finalizer
+      ext_ring.detach!
+      
       Geometry.new(geom_ptr, @handle)
     rescue => e
       puts "Error creating polygon: #{e.message}"
+      # If creation failed, ext_ring and hole_geoms will be
+      # garbage collected normally, which is correct.
       raise
     end
     
@@ -468,6 +491,11 @@ module RubyGEOS
       
       geom_ptr = RubyGEOS.GEOSGeom_createCollection_r(@handle, type, geoms_array, geometries.length)
       raise "Failed to create collection" if geom_ptr.null?
+      
+      # === FIX ===
+      # GEOS now owns these geometries, so detach their finalizers
+      geometries.each(&:detach!)
+      
       Geometry.new(geom_ptr, @handle)
     rescue => e
       puts "Error creating collection: #{e.message}"
