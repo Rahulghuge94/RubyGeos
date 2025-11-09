@@ -24,11 +24,6 @@ Clone the repository:
 git clone https://github.com/Rahulghuge94/RubyGeos.git
 cd RubyGeos
 ```
-Or add to your Gemfile if using Bundler:
-
-```ruby
-gem 'ffi'
-```
 
 ## Usage
 
@@ -86,9 +81,9 @@ end
 
 ## Requirements
 
-- Ruby >= 2.5 (tested on 2.7+ and ICM Ruby)
+- Ruby >= 2.4 (tested on 2.4 and ICM Ruby)
 - [GEOS library](https://trac.osgeo.org/geos/) installed on your system
-- [ffi](https://github.com/ffi/ffi) Ruby gem (if library uses FFI bindings)
+- [ffi](https://github.com/ffi/ffi) Ruby gem (if library uses Fiddle)
 
 ## Development
 
